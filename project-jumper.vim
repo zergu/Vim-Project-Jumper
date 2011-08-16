@@ -22,7 +22,6 @@ map <C-j><C-r> :call JumperJump("routing")<CR>
 map <C-j><C-g> :call JumperJump("appconfig")<CR>
 map <C-j><C-a> :call JumperJump("action")<CR>
 map <C-j><C-v> :call JumperJump("view")<CR>
-map <C-j><C-u> :call JumperJump("layout")<CR>
 
 " JUMP!
 function! JumperJump(target)
