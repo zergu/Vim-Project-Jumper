@@ -1,4 +1,4 @@
-Plugin creates keyboard shortcuts for editing most common files or exploring most common directories. Currenty works only in Symfony 1.4 projects but I have plans to exeted support do Symfony 2 and Rails 3.
+Plugin creates keyboard shortcuts for editing most common files or exploring most common directories. Currenty works only in Symfony 1.4 projects but I have plans to extend support to Symfony 2 and Rails 3.
 
 Shortcuts are working only when current directory is from inside a project.
 
