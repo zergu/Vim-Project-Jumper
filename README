@@ -49,4 +49,4 @@ Application replated (if your project has more that one application avaiable opt
 Remapping shortucts
 -------------------
 
-TODO
+Just copy mappings from the beginning of project-jumper.vim file to your .vimrc and modify it.
