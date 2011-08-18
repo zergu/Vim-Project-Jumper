@@ -13,7 +13,7 @@ Latest version of Vim Project Jumper can be found at https://github.com/zergu/Vi
 Installation
 ------------
 
-Unpack all *.vim files and this README into ~/.vim/plugin/project-jumper/ directory. Restart Vim in necessary.
+Unpack all *.vim files and this README into ~/.vim/plugin/project-jumper/ directory. Restart Vim if necessary.
 
 Usage
 -----
