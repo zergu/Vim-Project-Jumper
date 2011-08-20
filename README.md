@@ -1,4 +1,5 @@
 Project-Jumper 0.1
+==================
 
 What is Project-Jumper?
 -----------------------
@@ -22,8 +23,8 @@ Default shortucts work from Vim edit mode. To invoke a jump keep @ctrl@ presses 
 
 Shortcuts are working only when current directory (you can check it with :pwd command) is from inside a project. Avoid using shortucts elsewhere cause it can do some heavy and unsuccessful file searching.
 
-Default shotcuts
-----------------
+Default shortcuts
+-----------------
 
 Project project related:
 * <C-j><C-m> Model: Explore lib/model dir.
@@ -38,7 +39,7 @@ Project project related:
 * <C-j><C-q> SQL: Explore data/sql dir.
 * <C-j><C-x> Fixtures: Explore data/fixtures dir.
 
-Application replated (if your project has more that one application avaiable options are shown):
+Application related (if your project has more that one application avaiable options are shown):
 * <C-j><C-u> Layout: Edit $appname/templates/*layout*.php file (supports multiple options).
 * <C-j><C-o> Modules: Explore $appname/modules dir.
 * <C-j><C-r> Routing: Edit $appname/config/routing.yml file.
