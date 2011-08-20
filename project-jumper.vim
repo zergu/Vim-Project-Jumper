@@ -4,24 +4,32 @@ if exists("g:loaded_Jumper")
 endif
 let g:loaded_Jumper = 1 " Version numbrer
 
-" Key bindings
-map <C-j><C-m> :call JumperJump("model")<CR>
-map <C-j><C-s> :call JumperJump("schema")<CR>
-map <C-j><C-y> :call JumperJump("css")<CR>
-map <C-j><C-j> :call JumperJump("js")<CR>
-map <C-j><C-t> :call JumperJump("test")<CR>
-map <C-j><C-h> :call JumperJump("helper")<CR>
-map <C-j><C-f> :call JumperJump("form")<CR>
-map <C-j><C-i> :call JumperJump("filter")<CR>
-map <C-j><C-l> :call JumperJump("lib")<CR>
-map <C-j><C-q> :call JumperJump("sql")<CR>
-map <C-j><C-x> :call JumperJump("fixtures")<CR>
-map <C-j><C-u> :call JumperJump("layout")<CR>
-map <C-j><C-o> :call JumperJump("modules")<CR>
-map <C-j><C-r> :call JumperJump("routing")<CR>
-map <C-j><C-g> :call JumperJump("appconfig")<CR>
-map <C-j><C-a> :call JumperJump("action")<CR>
-map <C-j><C-v> :call JumperJump("view")<CR>
+" Key bindings: MVC
+map <M-j><M-m> :call JumperJump("model")<CR>
+map <M-j><M-v> :call JumperJump("view")<CR>
+map <M-j><M-c> :call JumperJump("contoller")<CR>
+
+" Key bindings: project
+map <M-j><M-t> :call JumperJump("root")<CR>
+map <M-j><M-s> :call JumperJump("schema")<CR>
+map <M-j><M-e> :call JumperJump("test")<CR>
+map <M-j><M-h> :call JumperJump("helper")<CR>
+map <M-j><M-f> :call JumperJump("form")<CR>
+map <M-j><M-i> :call JumperJump("filter")<CR>
+map <M-j><M-l> :call JumperJump("lib")<CR>
+map <M-j><M-q> :call JumperJump("sql")<CR>
+map <M-j><M-x> :call JumperJump("fixtures")<CR>
+
+" Key bindings: applications
+map <M-j><M-a> :call JumperJump("application")<CR>
+map <M-j><M-u> :call JumperJump("layout")<CR>
+map <M-j><M-o> :call JumperJump("modules")<CR>
+map <M-j><M-r> :call JumperJump("routing")<CR>
+map <M-j><M-g> :call JumperJump("appconfig")<CR>
+
+" Key bindings: frontend assets
+map <M-j><M-j> :call JumperJump("js")<CR>
+map <M-j><M-k> :call JumperJump("css")<CR>
 
 " JUMP!
 function! JumperJump(target)
@@ -89,12 +97,16 @@ function! JumperJump(target)
 			elseif a:target == "routing"
 				let l:results = split(system("find ".l:maindir."apps -type d -mindepth 1 -maxdepth 1 | grep -v .svn"))
 				execute "edit ".l:results[s:MultipleChoice(l:results)]."/config/routing.yml"
+			" App main dir - explore
+			elseif a:target == "application"
+				let l:results = split(system("find ".l:maindir."apps -type d -mindepth 1 -maxdepth 1 | grep -v .svn"))
+				execute "Explore ".l:results[s:MultipleChoice(l:results)]
 			" App config - edit
 			elseif a:target == "appconfig"
 				let l:results = split(system("find ".l:maindir."apps -type d -mindepth 1 -maxdepth 1 | grep -v .svn"))
 				execute "edit ".l:results[s:MultipleChoice(l:results)]."/config/app.yml"
-			" Jump to actions from views (magical)
-			elseif a:target == "action"
+			" Jump to controller from views (magical)
+			elseif a:target == "controller"
 				let l:currdir = expand("%:p:h")
 				if matchend(l:currdir, "templates") != -1 " Check if we're in templates dir
 					silent execute "edit ".l:currdir."/../actions/actions.class.php"
