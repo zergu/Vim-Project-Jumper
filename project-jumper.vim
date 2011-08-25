@@ -5,32 +5,32 @@ endif
 let g:loaded_Jumper = 1 " Version numbrer
 
 " Key bindings: MVC
-map <S-C-m> :call JumperJump("model")<CR>
-map <S-C-v> :call JumperJump("view")<CR>
-map <S-C-c> :call JumperJump("controller")<CR>
+map <C-M-m> :call JumperJump("model")<CR>
+map <C-M-v> :call JumperJump("view")<CR>
+map <C-M-c> :call JumperJump("controller")<CR>
 
 " Key bindings: project
-map <S-C-t> :call JumperJump("root")<CR>
-map <S-C-s> :call JumperJump("schema")<CR>
-map <S-C-e> :call JumperJump("test")<CR>
-map <S-C-h> :call JumperJump("helper")<CR>
-map <S-C-f> :call JumperJump("form")<CR>
-map <S-C-i> :call JumperJump("filter")<CR>
-map <S-C-l> :call JumperJump("lib")<CR>
-map <S-C-q> :call JumperJump("sql")<CR>
-map <S-C-x> :call JumperJump("fixtures")<CR>
-map <S-C-u> :call JumperJump("parent")<CR>
+map <C-M-t> :call JumperJump("root")<CR>
+map <C-M-s> :call JumperJump("schema")<CR>
+map <C-M-e> :call JumperJump("test")<CR>
+map <C-M-h> :call JumperJump("helper")<CR>
+map <C-M-f> :call JumperJump("form")<CR>
+map <C-M-i> :call JumperJump("filter")<CR>
+map <C-M-l> :call JumperJump("lib")<CR>
+map <C-M-q> :call JumperJump("sql")<CR>
+map <C-M-x> :call JumperJump("fixtures")<CR>
+map <C-M-u> :call JumperJump("parent")<CR>
 
 " Key bindings: applications
-map <S-C-a> :call JumperJump("application")<CR>
-map <S-C-y> :call JumperJump("layout")<CR>
-map <S-C-o> :call JumperJump("modules")<CR>
-map <S-C-r> :call JumperJump("routing")<CR>
-map <S-C-g> :call JumperJump("appconfig")<CR>
+map <C-M-a> :call JumperJump("application")<CR>
+map <C-M-y> :call JumperJump("layout")<CR>
+map <C-M-o> :call JumperJump("modules")<CR>
+map <C-M-r> :call JumperJump("routing")<CR>
+map <C-M-g> :call JumperJump("appconfig")<CR>
 
 " Key bindings: frontend assets
-map <S-C-j> :call JumperJump("js")<CR>
-map <S-C-k> :call JumperJump("css")<CR>
+map <C-M-j> :call JumperJump("js")<CR>
+map <C-M-k> :call JumperJump("css")<CR>
 
 " JUMP!
 function! JumperJump(target)
