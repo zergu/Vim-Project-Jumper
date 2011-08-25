@@ -45,7 +45,7 @@ Application related (if your project has more that one application avaiable opti
 
 * `<M-j><M-c>` Controller: Edit actions.class.php when editing or exploring module templates.
 * `<M-j><M-v>` View: While cursor is placed on function header tries to edit associaded view. If none could be found, explores views directory.
-* `<M-j><M-u>` Layout: Edit $appname/templates/*layout*.php file (supports multiple options).
+* `<M-j><M-y>` Layout: Edit $appname/templates/*layout*.php file (supports multiple options).
 * `<M-j><M-o>` Modules: Explore $appname/modules dir.
 * `<M-j><M-r>` Routing: Edit $appname/config/routing.yml file.
 * `<M-j><M-g>` AppConfig: Edit $appname/config/app.yml file.

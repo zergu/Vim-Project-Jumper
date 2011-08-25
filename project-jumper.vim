@@ -5,37 +5,46 @@ endif
 let g:loaded_Jumper = 1 " Version numbrer
 
 " Key bindings: MVC
-map <M-j><M-m> :call JumperJump("model")<CR>
-map <M-j><M-v> :call JumperJump("view")<CR>
-map <M-j><M-c> :call JumperJump("contoller")<CR>
+map <S-C-m> :call JumperJump("model")<CR>
+map <S-C-v> :call JumperJump("view")<CR>
+map <S-C-c> :call JumperJump("controller")<CR>
 
 " Key bindings: project
-map <M-j><M-t> :call JumperJump("root")<CR>
-map <M-j><M-s> :call JumperJump("schema")<CR>
-map <M-j><M-e> :call JumperJump("test")<CR>
-map <M-j><M-h> :call JumperJump("helper")<CR>
-map <M-j><M-f> :call JumperJump("form")<CR>
-map <M-j><M-i> :call JumperJump("filter")<CR>
-map <M-j><M-l> :call JumperJump("lib")<CR>
-map <M-j><M-q> :call JumperJump("sql")<CR>
-map <M-j><M-x> :call JumperJump("fixtures")<CR>
+map <S-C-t> :call JumperJump("root")<CR>
+map <S-C-s> :call JumperJump("schema")<CR>
+map <S-C-e> :call JumperJump("test")<CR>
+map <S-C-h> :call JumperJump("helper")<CR>
+map <S-C-f> :call JumperJump("form")<CR>
+map <S-C-i> :call JumperJump("filter")<CR>
+map <S-C-l> :call JumperJump("lib")<CR>
+map <S-C-q> :call JumperJump("sql")<CR>
+map <S-C-x> :call JumperJump("fixtures")<CR>
+map <S-C-u> :call JumperJump("parent")<CR>
 
 " Key bindings: applications
-map <M-j><M-a> :call JumperJump("application")<CR>
-map <M-j><M-u> :call JumperJump("layout")<CR>
-map <M-j><M-o> :call JumperJump("modules")<CR>
-map <M-j><M-r> :call JumperJump("routing")<CR>
-map <M-j><M-g> :call JumperJump("appconfig")<CR>
+map <S-C-a> :call JumperJump("application")<CR>
+map <S-C-y> :call JumperJump("layout")<CR>
+map <S-C-o> :call JumperJump("modules")<CR>
+map <S-C-r> :call JumperJump("routing")<CR>
+map <S-C-g> :call JumperJump("appconfig")<CR>
 
 " Key bindings: frontend assets
-map <M-j><M-j> :call JumperJump("js")<CR>
-map <M-j><M-k> :call JumperJump("css")<CR>
+map <S-C-j> :call JumperJump("js")<CR>
+map <S-C-k> :call JumperJump("css")<CR>
 
 " JUMP!
 function! JumperJump(target)
 	try
 		" Find project's main directory by locating 'symfony' file
-		let l:maindir = findfile("symfony", ".;")
+		let l:maindir = findfile("symfony", ".;") 
+
+		" Hack warning: a little bit different search (above do not work while
+		" exploring maindir, below doesn't work when project is mounted via
+		" sshfs
+		if l:maindir == ""
+			let l:maindir = findfile("symfony", ".*;")
+		endif
+
 		if l:maindir == "symfony" " File found in current dir and not pull path is returned
 			let l:maindir = getcwd()."/"
 		else
@@ -105,6 +114,23 @@ function! JumperJump(target)
 			elseif a:target == "appconfig"
 				let l:results = split(system("find ".l:maindir."apps -type d -mindepth 1 -maxdepth 1 | grep -v .svn"))
 				execute "edit ".l:results[s:MultipleChoice(l:results)]."/config/app.yml"
+			" Parent class - edit
+			elseif a:target == "parent"
+				throw "Not implemented yet"
+				let l:linenum = 0
+				while 1
+					let l:matches = matchlist(getline(l:linenum), 'class.*extends \(.*\)')
+					if (len (l:matches))
+						let l:parent_name = l:matches[1]
+						break
+					endif
+					let l:linenum += 1
+				endwhile
+				
+				if l:parent_name
+					let l:results = split(system("find ".l:maindir." -type f -name \"".l:parent_name.".php\""))
+					execute "edit ".l:results[s:MultipleChoice(l:results)]
+				endif
 			" Jump to controller from views (magical)
 			elseif a:target == "controller"
 				let l:currdir = expand("%:p:h")
@@ -128,7 +154,7 @@ function! JumperJump(target)
 					endif
 				endif
 			else
-				throw "Unrecognized target" a:target 
+				throw "Unrecognized target ".a:target 
 			endif
 		endif
 	catch /.*/
