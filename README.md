@@ -19,14 +19,14 @@ Unpack all *.vim files and this README into `~/.vim/plugin/project-jumper/` dire
 Usage
 -----
 
-Default shortucts work from Vim edit mode. To invoke a jump keep `ctrl` and `alt` and then type a key depending whare you're trying to jump to.
+Default shortcuts work from Vim edit mode. To invoke a jump, keep `ctrl` and `alt` and then type a key depending whare you're trying to jump to.
 
 Shortcuts are working only when current directory (you can check it with `:pwd` command) is from inside a project. Avoid using shortucts elsewhere cause it can do some heavy and unsuccessful file searching.
 
 Default shortcuts
 -----------------
 
-Project project related:
+Project related:
 
 * `<C-M-t>` Root: Explore project main dir.
 * `<C-M-m>` Model: Explore lib/model dir.
@@ -41,7 +41,7 @@ Project project related:
 * `<C-M-q>` SQL: Explore data/sql dir.
 * `<C-M-x>` Fixtures: Explore data/fixtures dir.
 
-Application related (if your project has more that one application avaiable options are shown):
+Application related (if your project has more that one application — available options are shown):
 
 * `<C-M-c>` Controller: Edit actions.class.php when editing or exploring module templates.
 * `<C-M-v>` View: While cursor is placed on function header tries to edit associaded view. If none could be found, explores views directory.
@@ -49,7 +49,7 @@ Application related (if your project has more that one application avaiable opti
 * `<C-M-o>` Modules: Explore $appname/modules dir.
 * `<C-M-r>` Routing: Edit $appname/config/routing.yml file.
 * `<C-M-g>` AppConfig: Edit $appname/config/app.yml file.
-* `<C-M-a>` Application: Explore application maind dir.
+* `<C-M-a>` Application: Explore application main dir.
 
 Remapping shortucts
 -------------------
