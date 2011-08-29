@@ -117,16 +117,9 @@ function! JumperJump(target)
 			" Parent class - edit
 			elseif a:target == "parent"
 				throw "Not implemented yet"
-				let l:linenum = 0
-				while 1
-					let l:matches = matchlist(getline(l:linenum), 'class.*extends \(.*\)')
-					if (len (l:matches))
-						let l:parent_name = l:matches[1]
-						break
-					endif
-					let l:linenum += 1
-				endwhile
+				let l:parent_name = system("grep -o 'extends \\w\\+' ".expand("%:p")." | sed 's/extends //' | sed 's/\\^\\@//")
 				
+				throw "find ".l:maindir." -type f -name \"".l:parent_name.".php\""
 				if l:parent_name
 					let l:results = split(system("find ".l:maindir." -type f -name \"".l:parent_name.".php\""))
 					execute "edit ".l:results[s:MultipleChoice(l:results)]
