@@ -41,7 +41,7 @@ Project project related:
 * `<C-M-q>` SQL: Explore data/sql dir.
 * `<C-M-x>` Fixtures: Explore data/fixtures dir.
 
-Application related (if your project has more that one application avaiable options are shown):
+Application related (if your project has more that one application available options are shown):
 
 * `<C-M-c>` Controller: Edit actions.class.php when editing or exploring module templates.
 * `<C-M-v>` View: While cursor is placed on function header tries to edit associaded view. If none could be found, explores views directory.
