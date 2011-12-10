@@ -95,24 +95,24 @@ function! JumperJump(target)
 				execute "edit ".l:results[s:MultipleChoice(l:results)]
 			" Modules - explore
 			elseif a:target == "modules"
-				let l:results = split(system("find ".l:maindir."apps -type d -mindepth 1 -maxdepth 1 | grep -v .svn"))
+				let l:results = s:AppFinder(l:maindir)
 				execute "Explore ".l:results[s:MultipleChoice(l:results)]."/modules"
 			" Layout - explore
 			elseif a:target == "layout"
-				let l:results = split(system("find ".l:maindir."apps -type d -mindepth 1 -maxdepth 1 | grep -v .svn"))
+				let l:results = s:AppFinder(l:maindir)
 				let l:results = split(system("find ".l:results[s:MultipleChoice(l:results)]."/templates -name \"*layout*.php\" | grep -v .svn"))
 				execute "edit ".l:results[s:MultipleChoice(l:results)]
 			" Routing - edit
 			elseif a:target == "routing"
-				let l:results = split(system("find ".l:maindir."apps -type d -mindepth 1 -maxdepth 1 | grep -v .svn"))
+				let l:results = s:AppFinder(l:maindir)
 				execute "edit ".l:results[s:MultipleChoice(l:results)]."/config/routing.yml"
 			" App main dir - explore
 			elseif a:target == "application"
-				let l:results = split(system("find ".l:maindir."apps -type d -mindepth 1 -maxdepth 1 | grep -v .svn"))
+				let l:results = s:AppFinder(l:maindir)
 				execute "Explore ".l:results[s:MultipleChoice(l:results)]
 			" App config - edit
 			elseif a:target == "appconfig"
-				let l:results = split(system("find ".l:maindir."apps -type d -mindepth 1 -maxdepth 1 | grep -v .svn"))
+				let l:results = s:AppFinder(l:maindir)
 				execute "edit ".l:results[s:MultipleChoice(l:results)]."/config/app.yml"
 			" Parent class - edit
 			elseif a:target == "parent"
@@ -153,6 +153,11 @@ function! JumperJump(target)
 	catch /.*/
 		echom v:exception
 	endtry
+endfunction
+
+" Helper for finding application names
+function s:AppFinder(maindir)
+	return split(system("find ".a:maindir."apps -type d -mindepth 1 -maxdepth 1 | egrep -v '.svn|.git' | sort"))
 endfunction
 
 " Helper for multiple targets
