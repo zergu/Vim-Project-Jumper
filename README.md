@@ -19,7 +19,7 @@ Unpack all *.vim files and this README into `~/.vim/plugin/project-jumper/` dire
 Usage
 -----
 
-Default shortcuts work from Vim edit mode. To invoke a jump, keep `ctrl` and `alt` and then type a key depending whare you're trying to jump to.
+Default shortcuts work from Vim edit mode. To invoke a jump, keep `ctrl` and `alt` pressed and then type a key depending whare you're trying to jump to.
 
 Shortcuts are working only when current directory (you can check it with `:pwd` command) is from inside a project. Avoid using shortucts elsewhere cause it can do some heavy and unsuccessful file searching.
 
