@@ -27,13 +27,23 @@ map <C-M-y> :call JumperJump("layout")<CR>
 map <C-M-o> :call JumperJump("modules")<CR>
 map <C-M-r> :call JumperJump("routing")<CR>
 map <C-M-g> :call JumperJump("appconfig")<CR>
+map <C-M-a> :call JumperJump("application")<CR>
+map <M-1> :call JumperJump("application_num", 1)<CR>
+map <M-2> :call JumperJump("application_num", 2)<CR>
+map <M-3> :call JumperJump("application_num", 3)<CR>
+map <M-4> :call JumperJump("application_num", 4)<CR>
+map <M-5> :call JumperJump("application_num", 5)<CR>
+map <M-6> :call JumperJump("application_num", 6)<CR>
+map <M-7> :call JumperJump("application_num", 7)<CR>
+map <M-8> :call JumperJump("application_num", 8)<CR>
+map <M-9> :call JumperJump("application_num", 9)<CR>
 
 " Key bindings: frontend assets
 map <C-M-j> :call JumperJump("js")<CR>
 map <C-M-k> :call JumperJump("css")<CR>
 
 " JUMP!
-function! JumperJump(target)
+function! JumperJump(target, ...)
 	try
 		" Find project's main directory by locating 'symfony' file
 		let l:maindir = findfile("symfony", ".;") 
@@ -110,6 +120,12 @@ function! JumperJump(target)
 			elseif a:target == "application"
 				let l:results = s:AppFinder(l:maindir)
 				execute "Explore ".l:results[s:MultipleChoice(l:results)]
+			" App main dir by number - explore (numbers assigned by
+			" alphabetical order)
+			elseif a:target == "application_num"
+				echo "dupa"
+				let l:results = s:AppFinder(l:maindir)
+				execute "Explore ".l:results[a:1]
 			" App config - edit
 			elseif a:target == "appconfig"
 				let l:results = s:AppFinder(l:maindir)
