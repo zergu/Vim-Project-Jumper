@@ -123,9 +123,8 @@ function! JumperJump(target, ...)
 			" App main dir by number - explore (numbers assigned by
 			" alphabetical order)
 			elseif a:target == "application_num"
-				echo "dupa"
 				let l:results = s:AppFinder(l:maindir)
-				execute "Explore ".l:results[a:1]
+				execute "Explore ".l:results[a:1-1]
 			" App config - edit
 			elseif a:target == "appconfig"
 				let l:results = s:AppFinder(l:maindir)

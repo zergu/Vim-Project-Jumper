@@ -51,6 +51,14 @@ Application related (if your project has more that one application available opt
 * `<C-M-g>` AppConfig: Edit $appname/config/app.yml file.
 * `<C-M-a>` Application: Explore application main dir.
 
+Applications by alphabetical order
+
+* `<M-1>` First app
+* `<M-2>` Second app
+* `<M-3>` Third app
+* …
+* `<M-9>` Ninth app
+
 Remapping shortucts
 -------------------
 
