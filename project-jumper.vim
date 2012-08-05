@@ -20,6 +20,7 @@ map <C-M-l> :call JumperJump("lib")<CR>
 map <C-M-q> :call JumperJump("sql")<CR>
 map <C-M-x> :call JumperJump("fixtures")<CR>
 map <C-M-u> :call JumperJump("parent")<CR>
+map <C-M-p> :call JumperJump("plugins")<CR>
 
 " Key bindings: applications
 map <C-M-a> :call JumperJump("application")<CR>
@@ -96,6 +97,9 @@ function! JumperJump(target, ...)
 			" Fixtures - explore dir
 			elseif a:target == "fixtures"
 				execute "Explore ".l:maindir."data/fixtures"
+			" Plugins - explore dir
+			elseif a:target == "plugins"
+				execute "Explore ".l:maindir."plugins"
 			" Main dir - explore dir
 			elseif a:target == "root"
 				execute "Explore ".l:maindir

@@ -40,6 +40,7 @@ Project related:
 * `<C-M-l>` Lib: Explore lib dir.
 * `<C-M-q>` SQL: Explore data/sql dir.
 * `<C-M-x>` Fixtures: Explore data/fixtures dir.
+* `<C-M-p>` Plugins: Explore plugins dir.
 
 Application related (if your project has more that one application available options are shown):
 
