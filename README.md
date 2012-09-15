@@ -1,10 +1,11 @@
-Project-Jumper 0.1
+Project-Jumper
 ==================
 
 What is Project-Jumper?
 -----------------------
 
-Project Jumper is a Vim plugin which creates keyboard shortcuts for editing most common files or exploring most common directories. Currenty works only in Symfony 1.4 projects but I have plans to extend support to Symfony 2 and Rails 3.
+Project Jumper is a Vim plugin which creates keyboard shortcuts for editing most common files or exploring most common directories
+in Symfony 1 and 2 (work in progress) frameworks.
 
 Latest version
 --------------
@@ -16,6 +17,10 @@ Installation
 
 Unpack all *.vim files and this README into `~/.vim/plugin/project-jumper/` directory. Restart Vim if necessary.
 
+''Important notice for Symfony 2 users''. In order Project-Jumper to work you need to create a file 'symfony2' in your project main directory.
+It may be empty but is better to use is as wrapper for app/console with content like that (also executable permissions need to be set):
+`php app/console $@`
+
 Usage
 -----
 
@@ -25,6 +30,8 @@ Shortcuts are working only when current directory (you can check it with `:pwd` 
 
 Default shortcuts
 -----------------
+
+### Symfony 1.4 ###
 
 Project related:
 
@@ -59,6 +66,13 @@ Applications by alphabetical order
 * `<M-3>` Third app
 * …
 * `<M-9>` Ninth app
+
+### Symfony 2 ###
+
+Project related:
+
+* `<C-M-t>` Root: Explore project main dir.
+* `<C-M-g>` AppConfig: Explore app/config/ dir.
 
 Remapping shortucts
 -------------------

@@ -46,101 +46,98 @@ map <C-M-k> :call JumperJump("css")<CR>
 " JUMP!
 function! JumperJump(target, ...)
 	try
-		" Find project's main directory by locating 'symfony' file
-		let l:maindir = findfile("symfony", ".;") 
+		if !exists("w:maindir")
+			" Is this Symfony 1 project?
+			let w:maindir	= s:ProjectFinder("symfony")
+			let w:type		= "sf1"
+			if w:maindir == ""
+				" If not, is it Symfony 2 project?
+				let w:maindir	= s:ProjectFinder("symfony2")
+				let w:type		= "sf2"
 
-		" Hack warning: a little bit different search (above do not work while
-		" exploring maindir, below doesn't work when project is mounted via
-		" sshfs
-		if l:maindir == ""
-			let l:maindir = findfile("symfony", ".*;")
+				" Let user know if it couldn't be found
+				if w:maindir == ""
+					throw "It doesn't look like symfony project, exiting..."
+				endif
+			endif
 		endif
 
-		if l:maindir == "symfony" " File found in current dir and not pull path is returned
-			let l:maindir = getcwd()."/"
-		else
-			let l:maindir = substitute(l:maindir,"symfony","","")
-		endif
-
-		" Let user know if it couldn't be found
-		if l:maindir == ""
-			throw "It doesn't look like symfony project, exiting..."
-		" Handle different targets to jump to
-		else
+		" Symfony 1: Handle different targets to jump to
+		if w:type == "sf1"
 			" Model - just explore
 			if a:target == "model"
-				execute "Explore ".l:maindir."lib/model"
+				execute "Explore ".w:maindir."lib/model"
 			" CSS - explore dir
 			elseif a:target == "css"
-				execute "Explore ".l:maindir."web/css"
+				execute "Explore ".w:maindir."web/css"
 			" Javascripts - explore dir
 			elseif a:target == "js"
-				execute "Explore ".l:maindir."web/js"
+				execute "Explore ".w:maindir."web/js"
 			" Tests - explore dir
 			elseif a:target == "test"
-				execute "Explore ".l:maindir."test"
+				execute "Explore ".w:maindir."test"
 			" Helpers - explore dir
 			elseif a:target == "helper"
-				execute "Explore ".l:maindir."lib/helper"
+				execute "Explore ".w:maindir."lib/helper"
 			" Forms - explore dir
 			elseif a:target == "form"
-				execute "Explore ".l:maindir."lib/form"
+				execute "Explore ".w:maindir."lib/form"
 			" Filters - explore dir
 			elseif a:target == "filter"
-				execute "Explore ".l:maindir."lib/filter"
+				execute "Explore ".w:maindir."lib/filter"
 			" Libs - explore dir
 			elseif a:target == "lib"
-				execute "Explore ".l:maindir."lib"
+				execute "Explore ".w:maindir."lib"
 			" SQL - explore dir
 			elseif a:target == "sql"
-				execute "Explore ".l:maindir."data/sql"
+				execute "Explore ".w:maindir."data/sql"
 			" Fixtures - explore dir
 			elseif a:target == "fixtures"
-				execute "Explore ".l:maindir."data/fixtures"
+				execute "Explore ".w:maindir."data/fixtures"
 			" Plugins - explore dir
 			elseif a:target == "plugins"
-				execute "Explore ".l:maindir."plugins"
+				execute "Explore ".w:maindir."plugins"
 			" Main dir - explore dir
 			elseif a:target == "root"
-				execute "Explore ".l:maindir
+				execute "Explore ".w:maindir
 			" Schema - if there's only one, edit it, if more, show menu
 			elseif a:target == "schema"
-				let l:results = split(system("find ".l:maindir."config -name \"*schema.yml\" | grep -v .svn"))
+				let l:results = split(system("find ".w:maindir."config -name \"*schema.yml\" | grep -v .svn"))
 				execute "edit ".l:results[s:MultipleChoice(l:results)]
 			" Modules - explore
 			elseif a:target == "modules"
-				let l:results = s:AppFinder(l:maindir)
+				let l:results = s:AppFinder(w:maindir)
 				execute "Explore ".l:results[s:MultipleChoice(l:results)]."/modules"
 			" Layout - explore
 			elseif a:target == "layout"
-				let l:results = s:AppFinder(l:maindir)
+				let l:results = s:AppFinder(w:maindir)
 				let l:results = split(system("find ".l:results[s:MultipleChoice(l:results)]."/templates -name \"*layout*.php\" | grep -v .svn"))
 				execute "edit ".l:results[s:MultipleChoice(l:results)]
 			" Routing - edit
 			elseif a:target == "routing"
-				let l:results = s:AppFinder(l:maindir)
+				let l:results = s:AppFinder(w:maindir)
 				execute "edit ".l:results[s:MultipleChoice(l:results)]."/config/routing.yml"
 			" App main dir - explore
 			elseif a:target == "application"
-				let l:results = s:AppFinder(l:maindir)
+				let l:results = s:AppFinder(w:maindir)
 				execute "Explore ".l:results[s:MultipleChoice(l:results)]
 			" App main dir by number - explore (numbers assigned by
 			" alphabetical order)
 			elseif a:target == "application_num"
-				let l:results = s:AppFinder(l:maindir)
+				let l:results = s:AppFinder(w:maindir)
 				execute "Explore ".l:results[a:1-1]
 			" App config - edit
 			elseif a:target == "appconfig"
-				let l:results = s:AppFinder(l:maindir)
+				let l:results = s:AppFinder(w:maindir)
 				execute "edit ".l:results[s:MultipleChoice(l:results)]."/config/app.yml"
 			" Parent class - edit
 			elseif a:target == "parent"
 				throw "Not implemented yet"
 				let l:parent_name = system("grep -o 'extends \\w\\+' ".expand("%:p")." | sed 's/extends //' | sed 's/\\^\\@//")
 				
-				throw "find ".l:maindir." -type f -name \"".l:parent_name.".php\""
+				throw "find ".w:maindir." -type f -name \"".l:parent_name.".php\""
 				if l:parent_name
-					let l:results = split(system("find ".l:maindir." -type f -name \"".l:parent_name.".php\""))
+					let l:results = split(system("find ".w:maindir." -type f -name \"".l:parent_name.".php\""))
 					execute "edit ".l:results[s:MultipleChoice(l:results)]
 				endif
 			" Jump to controller from views (magical)
@@ -166,7 +163,18 @@ function! JumperJump(target, ...)
 					endif
 				endif
 			else
-				throw "Unrecognized target ".a:target 
+				throw "Unrecognized target ".a:target
+			endif
+		" Symfony 2: Handle different targets to jump to
+		elseif w:type == "sf2"
+			" Projects main dir - explore
+			if a:target == "root"
+				execute "Explore ".w:maindir
+			" App config dir - explore
+			elseif a:target == "appconfig"
+				execute "Explore ".w:maindir."/app/config"
+			else
+				throw "Unrecognized target ".a:target
 			endif
 		endif
 	catch /.*/
@@ -174,12 +182,38 @@ function! JumperJump(target, ...)
 	endtry
 endfunction
 
+
+"
+" Find project main dir
+"
+function s:ProjectFinder(name)
+	" First check current directory
+	let l:result = findfile(a:name, getcwd())
+
+	" If file couldn't be found, check upwards
+	if l:result == ""
+		let l:result = findfile(a:name, ".;")
+		" If file is found, get it's directory
+		if l:result != ""
+			let l:result = substitute(l:result,a:name,"","")
+		endif
+	else
+		let l:result = getcwd()."/"
+	endif
+
+	return l:result
+endfunction
+
+"
 " Helper for finding application names
+"
 function s:AppFinder(maindir)
 	return split(system("find ".a:maindir."apps -type d -mindepth 1 -maxdepth 1 | egrep -v '.svn|.git' | sort"))
 endfunction
 
+"
 " Helper for multiple targets
+"
 function s:MultipleChoice(results)
 	let num = len(a:results)
 	if num < 1
