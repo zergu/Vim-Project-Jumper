@@ -43,6 +43,10 @@ map <M-9> :call JumperJump("application_num", 9)<CR>
 map <C-M-j> :call JumperJump("js")<CR>
 map <C-M-k> :call JumperJump("css")<CR>
 
+" Key bindings: Symfony2 specific
+map <C-M-b> :call JumperJump("bundles")<CR>
+map <C-M-n> :call JumperJump("vendor")<CR>
+
 " JUMP!
 function! JumperJump(target, ...)
 	try
@@ -173,6 +177,14 @@ function! JumperJump(target, ...)
 			" App config dir - explore
 			elseif a:target == "appconfig"
 				execute "Explore ".w:maindir."/app/config"
+			" Bundles - explore
+			elseif a:target == "bundles"
+				let l:results = split(system("find ".w:maindir."src -mindepth 1 -maxdepth 1 -type d | grep -v .svn "))
+				execute "Explore ".l:results[s:MultipleChoice(l:results)]."/"
+			" Vendor - explore
+			elseif a:target == "vendor"
+				let l:results = split(system("find ".w:maindir."vendor -mindepth 1 -maxdepth 1 -type d | grep -v .svn "))
+				execute "Explore ".l:results[s:MultipleChoice(l:results)]."/"
 			else
 				throw "Unrecognized target ".a:target
 			endif

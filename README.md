@@ -17,8 +17,9 @@ Installation
 
 Unpack all *.vim files and this README into `~/.vim/plugin/project-jumper/` directory. Restart Vim if necessary.
 
-''Important notice for Symfony 2 users''. In order Project-Jumper to work you need to create a file 'symfony2' in your project main directory.
-It may be empty but is better to use is as wrapper for app/console with content like that (also executable permissions need to be set):
+**Important notice for Symfony 2 users:** In order Project-Jumper to work you need to create a `symfony2` file in your project main directory.
+It may be empty but it's better to use is as wrapper for app/console with content like this (also executable permissions need to be set for convenient
+use):
 `php app/console $@`
 
 Usage
@@ -26,7 +27,7 @@ Usage
 
 Default shortcuts work from Vim edit mode. To invoke a jump, keep `ctrl` and `alt` pressed and then type a key depending whare you're trying to jump to.
 
-Shortcuts are working only when current directory (you can check it with `:pwd` command) is from inside a project. Avoid using shortucts elsewhere cause it can do some heavy and unsuccessful file searching.
+Project is determined during first jump and valid until Vim window is closed.
 
 Default shortcuts
 -----------------
@@ -73,6 +74,8 @@ Project related:
 
 * `<C-M-t>` Root: Explore project main dir.
 * `<C-M-g>` AppConfig: Explore app/config/ dir.
+* `<C-M-b>` Bundles: Explore src/\*/ dir.
+* `<C-M-n>` Vendor: Explore vendor/ dir.
 
 Remapping shortucts
 -------------------
