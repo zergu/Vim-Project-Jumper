@@ -2,7 +2,7 @@
 if exists("g:loaded_Jumper")
   finish
 endif
-let g:loaded_Jumper = 1 " Version numbrer
+let g:loaded_Jumper = 1
 
 " Key bindings: MVC
 map <C-M-m> :call JumperJump("model")<CR>
@@ -169,6 +169,7 @@ function! JumperJump(target, ...)
 			else
 				throw "Unrecognized target ".a:target
 			endif
+
 		" Symfony 2: Handle different targets to jump to
 		elseif w:type == "sf2"
 			" Projects main dir - explore
@@ -177,18 +178,43 @@ function! JumperJump(target, ...)
 			" App config dir - explore
 			elseif a:target == "appconfig"
 				execute "Explore ".w:maindir."/app/config"
+			" Base layout - edit
+			elseif a:target == "layout"
+				execute "edit ".w:maindir."/app/Resources/views/base.html.twig"
 			" Bundles - explore
 			elseif a:target == "bundles"
-				let l:results = split(system("find ".w:maindir."src -mindepth 1 -maxdepth 1 -type d | grep -v .svn "))
+				let l:results = s:BundleFinder(w:maindir)
 				execute "Explore ".l:results[s:MultipleChoice(l:results)]."/"
 			" Vendor - explore
 			elseif a:target == "vendor"
 				let l:results = split(system("find ".w:maindir."vendor -mindepth 1 -maxdepth 1 -type d | grep -v .svn "))
 				execute "Explore ".l:results[s:MultipleChoice(l:results)]."/"
+			" Controllers in AcmeAppBundle
+			elseif a:target == "controller"
+				execute "Explore ".w:maindir."/src/Acme/AppBundle/Controller"
+			" Model in AcmeAppBundle
+			elseif a:target == "model"
+				execute "Explore ".w:maindir."/src/Acme/AppBundle/Model"
+			" Views in AcmeAppBundle
+			elseif a:target == "view"
+				execute "Explore ".w:maindir."/src/Acme/AppBundle/Resources/views"
+			" Routing - edit
+			elseif a:target == "routing"
+				let l:results = s:BundleFinder(w:maindir)
+				execute "edit ".l:results[s:MultipleChoice(l:results)]."/Resources/config/routing.yml"
+			" App main dir - explore
+			elseif a:target == "application"
+				execute "Explore ".w:maindir."/app"
+			" Bundle main dir by number - explore (numbers assigned by
+			" alphabetical order)
+			elseif a:target == "application_num"
+				let l:results = s:BundleFinder(w:maindir)
+				execute "Explore ".l:results[a:1-1]
 			else
 				throw "Unrecognized target ".a:target
 			endif
 		endif
+
 	catch /.*/
 		echom v:exception
 	endtry
@@ -217,10 +243,17 @@ function s:ProjectFinder(name)
 endfunction
 
 "
-" Helper for finding application names
+" Helper for finding application names in Symfony1
 "
 function s:AppFinder(maindir)
 	return split(system("find ".a:maindir."apps -type d -mindepth 1 -maxdepth 1 | egrep -v '.svn|.git' | sort"))
+endfunction
+
+"
+" Helper for finding bundle names in Symfony2
+"
+function s:BundleFinder(maindir)
+	return split(system("find ".a:maindir."src/Acme/ -mindepth 1 -maxdepth 1 -type d | grep -v .svn | sort"))
 endfunction
 
 "
