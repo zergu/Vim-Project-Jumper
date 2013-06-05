@@ -80,9 +80,11 @@ Project related:
 
 AppBundle related (Acme/AppBundle):
 
+* `<C-M-m>` Model: Explore Model dir.
 * `<C-M-c>` Controller: explore Controller dir.
 * `<C-M-v>` View: explore Resources/views dir.
 * `<C-M-r>` Routing: edit Resources/config/routing.yml file.
+* `<C-M-f>` Form: Explore Form/Type dir.
 
 Bundles by alphabetical order
 

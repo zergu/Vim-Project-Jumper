@@ -198,14 +198,17 @@ function! JumperJump(target, ...)
 			" Views in AcmeAppBundle
 			elseif a:target == "view"
 				execute "Explore ".w:maindir."/src/Acme/AppBundle/Resources/views"
+			" Form in AcmeAppBundle
+			elseif a:target == "form"
+				execute "Explore ".w:maindir."/src/Acme/AppBundle/Form/Type"
 			" Routing - edit
 			elseif a:target == "routing"
 				let l:results = s:BundleFinder(w:maindir)
-				execute "edit ".l:results[s:MultipleChoice(l:results)]."/Resources/config/routing.yml"
+				execute "edit ".w:maindir."/src/Acme/AppBundle/Resources/config/routing.yml"
 			" Schema - edit
 			elseif a:target == "schema"
 				let l:results = s:BundleFinder(w:maindir)
-				execute "edit ".l:results[s:MultipleChoice(l:results)]."/Resources/config/schema.xml"
+				execute "edit ".w:maindir."/src/Acme/AppBundle/Resources/config/schema.xml"
 			" App main dir - explore
 			elseif a:target == "application"
 				execute "Explore ".w:maindir."/app"
