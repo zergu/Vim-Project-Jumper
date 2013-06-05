@@ -76,6 +76,21 @@ Project related:
 * `<C-M-g>` AppConfig: Explore app/config/ dir.
 * `<C-M-b>` Bundles: Explore src/\*/ dir.
 * `<C-M-n>` Vendor: Explore vendor/ dir.
+* `<C-M-y>` Layout: edit app/Resources/views/base.html.twig
+
+AppBundle related (Acme/AppBundle):
+
+* `<C-M-c>` Controller: explore Controller dir.
+* `<C-M-v>` View: explore Resources/views dir.
+* `<C-M-r>` Routing: edit Resources/config/routing.yml file.
+
+Bundles by alphabetical order
+
+* `<M-1>` First bundle
+* `<M-2>` Second bundle
+* `<M-3>` Third bundle
+* …
+* `<M-9>` Ninth bundle
 
 Remapping shortucts
 -------------------

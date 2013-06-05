@@ -202,6 +202,10 @@ function! JumperJump(target, ...)
 			elseif a:target == "routing"
 				let l:results = s:BundleFinder(w:maindir)
 				execute "edit ".l:results[s:MultipleChoice(l:results)]."/Resources/config/routing.yml"
+			" Schema - edit
+			elseif a:target == "schema"
+				let l:results = s:BundleFinder(w:maindir)
+				execute "edit ".l:results[s:MultipleChoice(l:results)]."/Resources/config/schema.xml"
 			" App main dir - explore
 			elseif a:target == "application"
 				execute "Explore ".w:maindir."/app"
