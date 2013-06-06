@@ -209,6 +209,10 @@ function! JumperJump(target, ...)
 			elseif a:target == "schema"
 				let l:results = s:BundleFinder(w:maindir)
 				execute "edit ".w:maindir."/src/Acme/AppBundle/Resources/config/schema.xml"
+			" SQL - explore base and fixtures
+			elseif a:target == "sql"
+				let l:results = s:BundleFinder(w:maindir)
+				execute "Explore ".w:maindir."/app/propel/"
 			" App main dir - explore
 			elseif a:target == "application"
 				execute "Explore ".w:maindir."/app"
