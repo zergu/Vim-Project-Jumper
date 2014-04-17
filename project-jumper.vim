@@ -138,7 +138,7 @@ function! JumperJump(target, ...)
 			elseif a:target == "parent"
 				throw "Not implemented yet"
 				let l:parent_name = system("grep -o 'extends \\w\\+' ".expand("%:p")." | sed 's/extends //' | sed 's/\\^\\@//")
-				
+
 				throw "find ".w:maindir." -type f -name \"".l:parent_name.".php\""
 				if l:parent_name
 					let l:results = split(system("find ".w:maindir." -type f -name \"".l:parent_name.".php\""))
@@ -194,7 +194,11 @@ function! JumperJump(target, ...)
 				execute "Explore ".w:maindir."/src/Acme/AppBundle/Controller"
 			" Model in AcmeAppBundle
 			elseif a:target == "model"
-				execute "Explore ".w:maindir."/src/Acme/AppBundle/Model"
+				if isdirectory(w:maindir."/src/Acme/AppBundle/Model")
+					execute "Explore ".w:maindir."/src/Acme/AppBundle/Model"
+				else
+					execute "Explore ".w:maindir."/src/Acme/AppBundle/Entity"
+				endif
 			" Views in AcmeAppBundle
 			elseif a:target == "view"
 				execute "Explore ".w:maindir."/src/Acme/AppBundle/Resources/views"
