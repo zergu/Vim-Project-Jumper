@@ -204,7 +204,7 @@ function! JumperJump(target, ...)
 				execute "Explore ".w:maindir."/src/Acme/AppBundle/Resources/views"
 			" Form in AcmeAppBundle
 			elseif a:target == "form"
-				execute "Explore ".w:maindir."/src/Acme/AppBundle/Form/Type"
+				execute "Explore ".w:maindir."/src/Acme/AppBundle/Form"
 			" Routing - edit
 			elseif a:target == "routing"
 				let l:results = s:BundleFinder(w:maindir)
