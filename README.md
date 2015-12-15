@@ -94,13 +94,15 @@ Bundles by alphabetical order
 * …
 * `<M-9>` Ninth bundle
 
-### Dajngo ###
+### Django ###
 
 Project related:
 
 * `<C-M-t>` Root: Explore project main dir.
 * `<C-M-n>` Vendor: Explore site-packages from venv dir.
-* `<C-M-y>` Layout: edit src/templates/base.html
+* `<C-M-y>` Layout: Edit src/templates/base.html
+* `<C-M-h>` Static HTML: Explore ../html
+* `<C-M-d>` Fabfile: Edit ../fabfile.py
 
 Module related:
 
