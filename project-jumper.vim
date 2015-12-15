@@ -13,7 +13,7 @@ map <C-M-c> :call JumperJump("controller")<CR>
 map <C-M-t> :call JumperJump("root")<CR>
 map <C-M-s> :call JumperJump("schema")<CR>
 map <C-M-e> :call JumperJump("test")<CR>
-map <C-M-h> :call JumperJump("helper")<CR>
+map <C-M-h> :call JumperJump("html")<CR>
 map <C-M-f> :call JumperJump("form")<CR>
 map <C-M-i> :call JumperJump("filter")<CR>
 map <C-M-l> :call JumperJump("lib")<CR>
@@ -21,6 +21,7 @@ map <C-M-q> :call JumperJump("sql")<CR>
 map <C-M-x> :call JumperJump("fixtures")<CR>
 map <C-M-u> :call JumperJump("parent")<CR>
 map <C-M-p> :call JumperJump("plugins")<CR>
+map <C-M-d> :call JumperJump("deploymenttool")<CR>
 
 " Key bindings: applications
 map <C-M-a> :call JumperJump("application")<CR>
@@ -51,18 +52,24 @@ map <C-M-n> :call JumperJump("vendor")<CR>
 function! JumperJump(target, ...)
 	try
 		if !exists("w:maindir")
-			" Is this Symfony 1 project?
-			let w:maindir	= s:ProjectFinder("symfony")
-			let w:type		= "sf1"
+			" Is this Symfony 2 project?
+			let w:maindir	= s:ProjectFinder("symfony2")
+			let w:type		= "sf2"
 			if w:maindir == ""
-				" If not, is it Symfony 2 project?
-				let w:maindir	= s:ProjectFinder("symfony2")
-				let w:type		= "sf2"
+				" If not, is it Django project?
+				let w:maindir	= s:ProjectFinder("src/manage.py")
+				let w:type		= "django"
 
-				" Let user know if it couldn't be found
-				if w:maindir == ""
-					throw "It doesn't look like symfony project, exiting..."
-				endif
+                if w:maindir == ""
+                    " If not, is it Symfony 1 project?
+                    let w:maindir	= s:ProjectFinder("symfony")
+                    let w:type		= "sf1"
+
+                    " Let user know if it couldn't be found
+                    if w:maindir == ""
+                        throw "Could not determine project type, exiting..."
+                    endif
+                endif
 			endif
 		endif
 
@@ -228,6 +235,60 @@ function! JumperJump(target, ...)
 			else
 				throw "Unrecognized target ".a:target
 			endif
+
+		" Django: Handle different targets to jump to
+        elseif w:type == "django"
+			" Projects main dir - explore
+			if a:target == "root"
+				execute "Explore ".w:maindir
+			" App config dir - explore
+			elseif a:target == "appconfig"
+				let l:results = s:DjangoAppFinder(w:maindir)
+                execute "edit ".l:results[s:MultipleChoice(l:results)]."/settings.py"
+			" Base layout - edit
+			elseif a:target == "layout"
+				execute "edit ".w:maindir."src/templates/base.html"
+			" Vendor - explore
+			elseif a:target == "vendor"
+				let l:results = split(system("find ".w:maindir."venv/lib/python2.7/site-packages/ -mindepth 1 -maxdepth 1 -type d | egrep -v '.svn|dist-info' "))
+				execute "Explore ".l:results[s:MultipleChoice(l:results)]."/"
+			" Controllers (views)
+			elseif a:target == "controller"
+				let l:results = s:DjangoAppFinder(w:maindir)
+                execute "edit ".l:results[s:MultipleChoice(l:results)]."/views.py"
+			" Models
+			elseif a:target == "model"
+				let l:results = s:DjangoAppFinder(w:maindir)
+                execute "edit ".l:results[s:MultipleChoice(l:results)]."/models.py"
+			" Modules
+			elseif a:target == "modules"
+				let l:results = s:DjangoAppFinder(w:maindir)
+                execute "Explore ".l:results[s:MultipleChoice(l:results)]
+			" Views (templates)
+			elseif a:target == "view"
+				execute "Explore ".w:maindir."/src/templates"
+			" Forms
+			elseif a:target == "form"
+				let l:results = s:DjangoAppFinder(w:maindir)
+                execute "edit ".l:results[s:MultipleChoice(l:results)]."/forms.py"
+			" Routing - edit
+			elseif a:target == "routing"
+				let l:results = s:DjangoAppFinder(w:maindir)
+                execute "edit ".l:results[s:MultipleChoice(l:results)]."/urls.py"
+			" HTML (statics)
+			elseif a:target == "html"
+				execute "Explore ".w:maindir."../html/"
+			" Fabric
+			elseif a:target == "deploymenttool"
+				execute "edit ".w:maindir."../fabfile.py"
+			" Bundle main dir by number - explore (numbers assigned by
+			" alphabetical order)
+			elseif a:target == "application_num"
+				let l:results = s:DjangoAppFinder(w:maindir)
+				execute "Explore ".l:results[a:1-1]
+			else
+				throw "Unrecognized target ".a:target
+			endif
 		endif
 
 	catch /.*/
@@ -269,6 +330,13 @@ endfunction
 "
 function s:BundleFinder(maindir)
 	return split(system("find ".a:maindir."src/Acme/ -mindepth 1 -maxdepth 1 -type d | grep -v .svn | sort"))
+endfunction
+
+"
+" Helper for finding applications in Django
+"
+function s:DjangoAppFinder(maindir)
+	return split(system("find ".a:maindir."src/ -type d -mindepth 1 -maxdepth 1 | egrep -v '.svn|.git|templates' | sort"))
 endfunction
 
 "

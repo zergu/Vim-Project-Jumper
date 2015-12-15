@@ -5,7 +5,7 @@ What is Project-Jumper?
 -----------------------
 
 Project Jumper is a Vim plugin which creates keyboard shortcuts for editing most common files or exploring most common directories
-in Symfony 1 and 2 (work in progress) frameworks.
+in Symfony 1 and 2 (work in progress) frameworks. Unfortunately, it's heavy dependant on project directory structure.
 
 Latest version
 --------------
@@ -93,6 +93,33 @@ Bundles by alphabetical order
 * `<M-3>` Third bundle
 * …
 * `<M-9>` Ninth bundle
+
+### Dajngo ###
+
+Project related:
+
+* `<C-M-t>` Root: Explore project main dir.
+* `<C-M-n>` Vendor: Explore site-packages from venv dir.
+* `<C-M-y>` Layout: edit src/templates/base.html
+
+Module related:
+
+* `<C-M-g>` Settings: Edit src/\*/settings.py dir.
+* `<C-M-o>` Modules: Explore src/\* dirs (except templates/).
+* `<C-M-m>` Models: Edit src/\*/models.py.
+* `<C-M-c>` Controller: Edit src/\*/views.py.
+* `<C-M-v>` View: Explore src/templates dir.
+* `<C-M-r>` Routing: edit src/\*/urls.py.
+* `<C-M-f>` Form: Explore src/\*/form.py.
+
+Modules by alphabetical order
+
+* `<M-1>` First module
+* `<M-2>` Second module
+* `<M-3>` Third module
+* …
+* `<M-9>` Ninth module
+
 
 Remapping shortucts
 -------------------
