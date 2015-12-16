@@ -250,7 +250,7 @@ function! JumperJump(target, ...)
 				execute "edit ".w:maindir."src/templates/base.html"
 			" Vendor - explore
 			elseif a:target == "vendor"
-				let l:results = split(system("find ".w:maindir."venv/lib/python2.7/site-packages/ -mindepth 1 -maxdepth 1 -type d | egrep -v '.svn|dist-info' "))
+				let l:results = split(system("find ".w:maindir."venv/lib/python2.7/site-packages/ -mindepth 1 -maxdepth 1 -type d | egrep -v '.svn|dist-info|egg-info' "))
 				execute "Explore ".l:results[s:MultipleChoice(l:results)]."/"
 			" Controllers (views)
 			elseif a:target == "controller"
