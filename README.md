@@ -44,7 +44,6 @@ Project related:
 * `<C-M-e>` Test: Explore test dir.
 * `<C-M-h>` Helper: Explore lib/helper dir.
 * `<C-M-f>` Form: Explore lib/form dir.
-* `<C-M-i>` Filter: Explore lib/filter dir.
 * `<C-M-l>` Lib: Explore lib dir.
 * `<C-M-q>` SQL: Explore data/sql dir.
 * `<C-M-x>` Fixtures: Explore data/fixtures dir.
@@ -111,8 +110,9 @@ Module related:
 * `<C-M-m>` Models: Edit src/\*/models.py.
 * `<C-M-c>` Controller: Edit src/\*/views.py.
 * `<C-M-v>` View: Explore src/templates dir.
-* `<C-M-r>` Routing: edit src/\*/urls.py.
+* `<C-M-r>` Routing: Edit src/\*/urls.py.
 * `<C-M-f>` Form: Explore src/\*/form.py.
+* `<C-M-i>` Admin: Edit src/\*/admin.py.
 
 Modules by alphabetical order
 

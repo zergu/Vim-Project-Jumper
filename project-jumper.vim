@@ -15,7 +15,7 @@ map <C-M-s> :call JumperJump("schema")<CR>
 map <C-M-e> :call JumperJump("test")<CR>
 map <C-M-h> :call JumperJump("html")<CR>
 map <C-M-f> :call JumperJump("form")<CR>
-map <C-M-i> :call JumperJump("filter")<CR>
+map <C-M-i> :call JumperJump("admin")<CR>
 map <C-M-l> :call JumperJump("lib")<CR>
 map <C-M-q> :call JumperJump("sql")<CR>
 map <C-M-x> :call JumperJump("fixtures")<CR>
@@ -240,7 +240,10 @@ function! JumperJump(target, ...)
         elseif w:type == "django"
             " Projects main dir - explore
             if a:target == "root"
-                execute "Explore ".w:maindir
+                execute "Explore ".w:maindir."../"
+            " App diectory - explore
+            elseif a:target == "application"
+                execute "Explore ".w:maindir."src/"
             " App config dir - explore
             elseif a:target == "appconfig"
                 let l:results = s:DjangoAppFinder(w:maindir)
@@ -275,6 +278,10 @@ function! JumperJump(target, ...)
             elseif a:target == "routing"
                 let l:results = s:DjangoAppFinder(w:maindir)
                 execute "edit ".l:results[s:MultipleChoice(l:results)]."/urls.py"
+            " Admin - edit
+            elseif a:target == "admin"
+                let l:results = s:DjangoAppFinder(w:maindir)
+                execute "edit ".l:results[s:MultipleChoice(l:results)]."/admin.py"
             " HTML (statics)
             elseif a:target == "html"
                 execute "Explore ".w:maindir."../html/"
